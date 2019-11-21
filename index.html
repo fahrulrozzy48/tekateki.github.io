@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cross Word</title>
+<link rel="stylesheet" href="style.css">
+
+<script>
+
+var currentTextInput;
+var puzzelArrayData;
+    
+//tampilan teka-teki
+function initializeScreen(){
+	var puzzelTable = document.getElementById("puzzel");
+	puzzelArrayData = preparePuzzelArray();
+	for ( var i = 0; i < puzzelArrayData.length ; i++ ) {
+		var row = puzzelTable.insertRow(-1);
+		var rowData = puzzelArrayData[i];
+		for(var j = 0 ; j < rowData.length ; j++){
+			var cell = row.insertCell(-1);
+			if(rowData[j] != 0){
+				var txtID = String('txt' + '_' + i + '_' + j);
+				cell.innerHTML = '<input type="text" class="inputBox" maxlength="1" style="text-transform: lowercase" ' + 'id="' + txtID + '" onfocus="textInputFocus(' + "'" + txtID + "'"+ ')">';
+			}else{
+				cell.style.backgroundColor  = "grey";
+			}
+		}
+	}
+	addHint();
+}
+//Menambahkan Nomer
+function addHint(){
+	document.getElementById("txt_0_2").placeholder = "1";
+	document.getElementById("txt_0_4").placeholder = "2";
+	document.getElementById("txt_2_1").placeholder = "3";
+	document.getElementById("txt_2_6").placeholder = "4";
+	document.getElementById("txt_3_1").placeholder = "5";
+	document.getElementById("txt_3_3").placeholder = "6";
+	document.getElementById("txt_3_8").placeholder = "7";
+	document.getElementById("txt_6_2").placeholder = "8";
+	document.getElementById("txt_8_6").placeholder = "9";
+	document.getElementById("txt_9_1").placeholder = "10";
+}
+//Stores ID of the selected cell into currentTextInput
+function textInputFocus(txtID123){
+	currentTextInput = txtID123;
+}
+//Array teka-teki
+function preparePuzzelArray(){
+var items = [	[0,  0,  'b', 'a', 'j', 'a', 'x',   0,   0,  0,0],
+				[0,  0,   0,   0,  'a',  0,   0,   0,   0,  0,0],
+				[0, 'a',  0,   0,  'w',  0,  'b',  0,   0,  0,0],
+				[0, 's', 'u', 'r', 'a', 'b', 'a', 'y', 'a', 0,0],
+				[0, 'i',  0,  'a',   0,   0, 'n',  0,  'p',  0,0],
+				[0, 'n',  0,  'h',   0,   0, 'd',  0,  'i',  0,0],
+				[0,  0,  'f', 'a', 'h', 'r', 'u', 'l',  0,  0,0],
+				[0,  0,   0,  's',   0,   0, 'n',  0,   0,  0,0],
+				[0,  0,   0,  'i',   0,   0, 'g', 'o', 'o','d',0],
+				[0, 'i', 'k', 'a', 'n',   0,  0,  0,   0,  0,0],
+				[0,  0,   0,   0,   0,   0,   0,  0,   0,  0,0]
+			];
+return items;
+}
+//button hapus semua
+function clearAllClicked(){
+	currentTextInput = '';
+	var puzzelTable = document.getElementById("puzzel");
+	puzzelTable.innerHTML = '';
+    initializeScreen();
+}
+//Cek button
+function checkClicked(){
+ 
+	for ( var i = 0; i < puzzelArrayData.length ; i++ ) {
+		var rowData = puzzelArrayData[i];
+		for(var j = 0 ; j < rowData.length ; j++){
+			if(rowData[j] != 0){
+				var selectedInputTextElement = document.getElementById('txt' + '_' + i + '_' + j);
+				if(selectedInputTextElement.value != puzzelArrayData[i][j]){
+					selectedInputTextElement.style.backgroundColor = 'red';
+					
+				}else{
+					selectedInputTextElement.style.backgroundColor = 'green';
+				}
+			}
+		}
+        
+        
+	}
+    
+}
+//Clue Button
+function clueClicked(){
+	if (currentTextInput != null){
+		var temp1 = currentTextInput;
+		var token = temp1.split("_");
+		var row = token[1];
+		var column = token[2];
+		document.getElementById(temp1).value = puzzelArrayData[row][column];
+	}
+}
+
+    var skor = 0;
+	function cek_skor() {
+		var txt_0_2 = document.getElementById("txt_0_2").value;
+		var txt_0_3 = document.getElementById("txt_0_3").value;
+		var txt_0_4 = document.getElementById("txt_0_4").value;
+		var txt_0_5 = document.getElementById("txt_0_5").value;
+		var txt_0_6 = document.getElementById("txt_0_6").value;
+		var txt_1_4 = document.getElementById("txt_1_4").value;
+		var txt_2_4 = document.getElementById("txt_2_4").value;
+		var txt_3_1 = document.getElementById("txt_3_1").value;
+		var txt_3_2 = document.getElementById("txt_3_2").value;
+		var txt_3_3 = document.getElementById("txt_3_3").value;
+		var txt_3_4 = document.getElementById("txt_3_4").value;
+		var txt_3_5 = document.getElementById("txt_3_5").value;
+		var txt_3_6 = document.getElementById("txt_3_6").value;
+		var txt_3_7 = document.getElementById("txt_3_7").value;
+		var txt_3_8 = document.getElementById("txt_3_8").value;
+		var txt_2_1 = document.getElementById("txt_2_1").value;
+		var txt_4_1 = document.getElementById("txt_4_1").value;
+		var txt_5_1 = document.getElementById("txt_5_1").value;
+		var txt_4_3 = document.getElementById("txt_4_3").value;
+		var txt_5_3 = document.getElementById("txt_5_3").value;
+		var txt_6_3 = document.getElementById("txt_6_3").value;
+		var txt_7_3 = document.getElementById("txt_7_3").value;
+		var txt_8_3 = document.getElementById("txt_8_3").value;
+		var txt_9_3 = document.getElementById("txt_9_3").value;
+		var txt_2_6 = document.getElementById("txt_2_6").value;
+		var txt_4_6 = document.getElementById("txt_4_6").value;
+		var txt_5_6 = document.getElementById("txt_5_6").value;
+		var txt_6_6 = document.getElementById("txt_6_6").value;
+		var txt_7_6 = document.getElementById("txt_7_6").value;
+		var txt_8_6 = document.getElementById("txt_8_6").value;
+		var txt_6_2 = document.getElementById("txt_6_2").value;
+		var txt_6_4 = document.getElementById("txt_6_4").value;
+		var txt_6_5 = document.getElementById("txt_6_5").value;
+		var txt_6_7 = document.getElementById("txt_6_7").value;
+		var txt_8_7 = document.getElementById("txt_8_7").value;
+		var txt_8_8 = document.getElementById("txt_8_8").value;
+		var txt_8_9 = document.getElementById("txt_8_9").value;
+		var txt_9_1 = document.getElementById("txt_9_1").value;
+		var txt_9_2 = document.getElementById("txt_9_2").value;
+		var txt_9_4 = document.getElementById("txt_9_4").value;
+		var txt_4_8 = document.getElementById("txt_4_8").value;
+		var txt_5_8 = document.getElementById("txt_5_8").value;
+		if (txt_0_2 == "b" || txt_0_2 == "B") {
+			document.getElementById("txt_0_2").classList.remove("puzzel");
+			document.getElementById("txt_0_2").classList.remove("red");
+             document.getElementById("txt_0_2").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_0_2").classList.remove("puzzel");
+			document.getElementById("txt_0_2").classList.remove("green");
+             document.getElementById("txt_0_2").classList.add("red");
+		}
+        if (txt_0_3 == "a"||txt_0_3 == "A") {
+			document.getElementById("txt_0_3").classList.remove("puzzel");
+			document.getElementById("txt_0_3").classList.remove("red");
+             document.getElementById("txt_0_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_0_3").classList.remove("puzzel");
+			document.getElementById("txt_0_3").classList.remove("green");
+             document.getElementById("txt_0_3").classList.add("red");
+		}
+        if (txt_0_4 == "j"||txt_0_4 == "J") {
+			document.getElementById("txt_0_4").classList.remove("puzzel");
+			document.getElementById("txt_0_4").classList.remove("red");
+             document.getElementById("txt_0_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_0_4").classList.remove("puzzel");
+			document.getElementById("txt_0_4").classList.remove("green");
+             document.getElementById("txt_0_4").classList.add("red");
+		}
+        if (txt_0_5 == "a"||txt_0_5 == "A") {
+			document.getElementById("txt_0_5").classList.remove("puzzel");
+			document.getElementById("txt_0_5").classList.remove("red");
+             document.getElementById("txt_0_5").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_0_5").classList.remove("puzzel");
+			document.getElementById("txt_0_5").classList.remove("green");
+             document.getElementById("txt_0_5").classList.add("red");
+		}
+        if (txt_0_6 == "x"||txt_0_6 == "X") {
+			document.getElementById("txt_0_6").classList.remove("puzzel");
+			document.getElementById("txt_0_6").classList.remove("red");
+             document.getElementById("txt_0_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_0_6").classList.remove("puzzel");
+			document.getElementById("txt_0_6").classList.remove("green");
+             document.getElementById("txt_0_6").classList.add("red");
+		}
+        if (txt_1_4 == "a"||txt_1_4 == "A") {
+			document.getElementById("txt_1_4").classList.remove("puzzel");
+			document.getElementById("txt_1_4").classList.remove("red");
+             document.getElementById("txt_1_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_1_4").classList.remove("puzzel");
+			document.getElementById("txt_1_4").classList.remove("green");
+             document.getElementById("txt_1_4").classList.add("red");
+		}
+        if (txt_2_4 == "w"||txt_2_4 == "W") {
+			document.getElementById("txt_2_4").classList.remove("puzzel");
+			document.getElementById("txt_2_4").classList.remove("red");
+             document.getElementById("txt_2_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_2_4").classList.remove("puzzel");
+			document.getElementById("txt_2_4").classList.remove("green");
+             document.getElementById("txt_2_4").classList.add("red");
+		}
+        if (txt_3_1 == "s"||txt_3_1 == "S") {
+			document.getElementById("txt_3_1").classList.remove("puzzel");
+			document.getElementById("txt_3_1").classList.remove("red");
+             document.getElementById("txt_3_1").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_1").classList.remove("puzzel");
+			document.getElementById("txt_3_1").classList.remove("green");
+             document.getElementById("txt_3_1").classList.add("red");
+		}
+        if (txt_3_2 == "u"||txt_3_2 == "U") {
+			document.getElementById("txt_3_2").classList.remove("puzzel");
+			document.getElementById("txt_3_2").classList.remove("red");
+             document.getElementById("txt_3_2").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_2").classList.remove("puzzel");
+			document.getElementById("txt_3_2").classList.remove("green");
+             document.getElementById("txt_3_2").classList.add("red");
+		}
+        if (txt_3_3 == "r"||txt_3_3 == "R") {
+			document.getElementById("txt_3_3").classList.remove("puzzel");
+			document.getElementById("txt_3_3").classList.remove("red");
+             document.getElementById("txt_3_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_3").classList.remove("puzzel");
+			document.getElementById("txt_3_3").classList.remove("green");
+             document.getElementById("txt_3_3").classList.add("red");
+		}
+        if (txt_3_4 == "a"||txt_3_4 == "A") {
+			document.getElementById("txt_3_4").classList.remove("puzzel");
+			document.getElementById("txt_3_4").classList.remove("red");
+             document.getElementById("txt_3_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_4").classList.remove("puzzel");
+			document.getElementById("txt_3_4").classList.remove("green");
+             document.getElementById("txt_3_4").classList.add("red");
+		}
+        if (txt_3_5 == "b"||txt_3_5 == "B") {
+			document.getElementById("txt_3_5").classList.remove("puzzel");
+			document.getElementById("txt_3_5").classList.remove("red");
+             document.getElementById("txt_3_5").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_5").classList.remove("puzzel");
+			document.getElementById("txt_3_5").classList.remove("green");
+             document.getElementById("txt_3_5").classList.add("red");
+		}
+        if (txt_3_6 == "a"||txt_3_6 == "A") {
+			document.getElementById("txt_3_6").classList.remove("puzzel");
+			document.getElementById("txt_3_6").classList.remove("red");
+             document.getElementById("txt_3_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_6").classList.remove("puzzel");
+			document.getElementById("txt_3_6").classList.remove("green");
+             document.getElementById("txt_3_6").classList.add("red");
+		}
+        if (txt_3_7 == "y"||txt_3_7 == "Y") {
+			document.getElementById("txt_3_7").classList.remove("puzzel");
+			document.getElementById("txt_3_7").classList.remove("red");
+             document.getElementById("txt_3_7").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_7").classList.remove("puzzel");
+			document.getElementById("txt_3_7").classList.remove("green");
+             document.getElementById("txt_3_7").classList.add("red");
+		}
+        if (txt_3_8 == "a"||txt_3_8 == "A") {
+			document.getElementById("txt_3_8").classList.remove("puzzel");
+			document.getElementById("txt_3_8").classList.remove("red");
+             document.getElementById("txt_3_8").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_3_8").classList.remove("puzzel");
+			document.getElementById("txt_3_8").classList.remove("green");
+             document.getElementById("txt_3_8").classList.add("red");
+		}
+        if (txt_2_1 == "a"||txt_2_1 == "A") {
+			document.getElementById("txt_2_1").classList.remove("puzzel");
+			document.getElementById("txt_2_1").classList.remove("red");
+             document.getElementById("txt_2_1").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_2_1").classList.remove("puzzel");
+			document.getElementById("txt_2_1").classList.remove("green");
+             document.getElementById("txt_2_1").classList.add("red");
+		}
+        if (txt_4_1 == "i"||txt_4_1 == "I") {
+			document.getElementById("txt_4_1").classList.remove("puzzel");
+			document.getElementById("txt_4_1").classList.remove("red");
+             document.getElementById("txt_4_1").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_4_1").classList.remove("puzzel");
+			document.getElementById("txt_4_1").classList.remove("green");
+             document.getElementById("txt_4_1").classList.add("red");
+		}
+        if (txt_5_1 == "n"||txt_5_1 == "N") {
+			document.getElementById("txt_5_1").classList.remove("puzzel");
+			document.getElementById("txt_5_1").classList.remove("red");
+             document.getElementById("txt_5_1").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_5_1").classList.remove("puzzel");
+			document.getElementById("txt_5_1").classList.remove("green");
+             document.getElementById("txt_5_1").classList.add("red");
+		}
+        if (txt_4_3 == "a"||txt_4_3 == "A") {
+			document.getElementById("txt_4_3").classList.remove("puzzel");
+			document.getElementById("txt_4_3").classList.remove("red");
+             document.getElementById("txt_4_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_4_3").classList.remove("puzzel");
+			document.getElementById("txt_4_3").classList.remove("green");
+             document.getElementById("txt_4_3").classList.add("red");
+		}
+        if (txt_5_3 == "h"||txt_5_3 == "H") {
+			document.getElementById("txt_5_3").classList.remove("puzzel");
+			document.getElementById("txt_5_3").classList.remove("red");
+             document.getElementById("txt_5_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_5_3").classList.remove("puzzel");
+			document.getElementById("txt_5_3").classList.remove("green");
+             document.getElementById("txt_5_3").classList.add("red");
+		}
+        if (txt_6_3 == "a"||txt_6_3 == "A") {
+			document.getElementById("txt_6_3").classList.remove("puzzel");
+			document.getElementById("txt_6_3").classList.remove("red");
+             document.getElementById("txt_6_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_3").classList.remove("puzzel");
+			document.getElementById("txt_6_3").classList.remove("green");
+             document.getElementById("txt_6_3").classList.add("red");
+		}
+        if (txt_7_3 == "s"||txt_7_3 == "S") {
+			document.getElementById("txt_7_3").classList.remove("puzzel");
+			document.getElementById("txt_7_3").classList.remove("red");
+             document.getElementById("txt_7_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_7_3").classList.remove("puzzel");
+			document.getElementById("txt_7_3").classList.remove("green");
+             document.getElementById("txt_7_3").classList.add("red");
+		}
+        if (txt_8_3 == "i"||txt_8_3 == "I") {
+			document.getElementById("txt_8_3").classList.remove("puzzel");
+			document.getElementById("txt_8_3").classList.remove("red");
+             document.getElementById("txt_8_3").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_8_3").classList.remove("puzzel");
+			document.getElementById("txt_8_3").classList.remove("green");
+             document.getElementById("txt_8_3").classList.add("red");
+		}
+        if (txt_2_6 == "b"||txt_2_6 == "B") {
+			document.getElementById("txt_2_6").classList.remove("puzzel");
+			document.getElementById("txt_2_6").classList.remove("red");
+             document.getElementById("txt_2_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_2_6").classList.remove("puzzel");
+			document.getElementById("txt_2_6").classList.remove("green");
+             document.getElementById("txt_2_6").classList.add("red");
+		}
+        if (txt_4_6 == "n"||txt_4_6 == "N") {
+			document.getElementById("txt_4_6").classList.remove("puzzel");
+			document.getElementById("txt_4_6").classList.remove("red");
+             document.getElementById("txt_4_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_4_6").classList.remove("puzzel");
+			document.getElementById("txt_4_6").classList.remove("green");
+             document.getElementById("txt_4_6").classList.add("red");
+		}
+        if (txt_5_6 == "d"||txt_5_6 == "D") {
+			document.getElementById("txt_5_6").classList.remove("puzzel");
+			document.getElementById("txt_5_6").classList.remove("red");
+             document.getElementById("txt_5_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_5_6").classList.remove("puzzel");
+			document.getElementById("txt_5_6").classList.remove("green");
+             document.getElementById("txt_5_6").classList.add("red");
+		}
+        if (txt_6_6 == "u"||txt_6_6 == "U") {
+			document.getElementById("txt_6_6").classList.remove("puzzel");
+			document.getElementById("txt_6_6").classList.remove("red");
+             document.getElementById("txt_6_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_6").classList.remove("puzzel");
+			document.getElementById("txt_6_6").classList.remove("green");
+             document.getElementById("txt_6_6").classList.add("red");
+		}
+        if (txt_7_6 == "n"||txt_7_6 == "N") {
+			document.getElementById("txt_7_6").classList.remove("puzzel");
+			document.getElementById("txt_7_6").classList.remove("red");
+             document.getElementById("txt_7_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_7_6").classList.remove("puzzel");
+			document.getElementById("txt_7_6").classList.remove("green");
+             document.getElementById("txt_7_6").classList.add("red");
+		}
+        if (txt_8_6 == "g"||txt_8_6 == "G") {
+			document.getElementById("txt_8_6").classList.remove("puzzel");
+			document.getElementById("txt_8_6").classList.remove("red");
+             document.getElementById("txt_8_6").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_8_6").classList.remove("puzzel");
+			document.getElementById("txt_8_6").classList.remove("green");
+             document.getElementById("txt_8_6").classList.add("red");
+		}
+        if (txt_6_2 == "f"||txt_6_2 == "F") {
+			document.getElementById("txt_6_2").classList.remove("puzzel");
+			document.getElementById("txt_6_2").classList.remove("red");
+             document.getElementById("txt_6_2").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_2").classList.remove("puzzel");
+			document.getElementById("txt_6_2").classList.remove("green");
+             document.getElementById("txt_6_2").classList.add("red");
+		}
+        if (txt_6_4 == "h"||txt_6_4 == "H") {
+			document.getElementById("txt_6_4").classList.remove("puzzel");
+			document.getElementById("txt_6_4").classList.remove("red");
+             document.getElementById("txt_6_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_4").classList.remove("puzzel");
+			document.getElementById("txt_6_4").classList.remove("green");
+             document.getElementById("txt_6_4").classList.add("red");
+		}
+        if (txt_6_5 == "r"||txt_6_5 == "R") {
+			document.getElementById("txt_6_5").classList.remove("puzzel");
+			document.getElementById("txt_6_5").classList.remove("red");
+             document.getElementById("txt_6_5").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_5").classList.remove("puzzel");
+			document.getElementById("txt_6_5").classList.remove("green");
+             document.getElementById("txt_6_5").classList.add("red");
+		}
+        if (txt_6_7 == "l"||txt_6_7 == "L") {
+			document.getElementById("txt_6_7").classList.remove("puzzel");
+			document.getElementById("txt_6_7").classList.remove("red");
+             document.getElementById("txt_6_7").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_6_7").classList.remove("puzzel");
+			document.getElementById("txt_6_7").classList.remove("green");
+             document.getElementById("txt_6_7").classList.add("red");
+		}
+        if (txt_8_7 == "o"||txt_8_7 == "O") {
+			document.getElementById("txt_8_7").classList.remove("puzzel");
+			document.getElementById("txt_8_7").classList.remove("red");
+             document.getElementById("txt_8_7").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_8_7").classList.remove("puzzel");
+			document.getElementById("txt_8_7").classList.remove("green");
+             document.getElementById("txt_8_7").classList.add("red");
+		}
+        if (txt_8_8 == "o"||txt_8_8 == "O") {
+			document.getElementById("txt_8_8").classList.remove("puzzel");
+			document.getElementById("txt_8_8").classList.remove("red");
+             document.getElementById("txt_8_8").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_8_8").classList.remove("puzzel");
+			document.getElementById("txt_8_8").classList.remove("green");
+             document.getElementById("txt_8_8").classList.add("red");
+		}
+        if (txt_8_9 == "d"||txt_8_9 == "D") {
+			document.getElementById("txt_8_9").classList.remove("puzzel");
+			document.getElementById("txt_8_9").classList.remove("red");
+             document.getElementById("txt_8_9").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_8_9").classList.remove("puzzel");
+			document.getElementById("txt_8_9").classList.remove("green");
+             document.getElementById("txt_8_9").classList.add("red");
+		}
+        if (txt_9_1 == "i"||txt_9_1 == "I") {
+			document.getElementById("txt_9_1").classList.remove("puzzel");
+			document.getElementById("txt_9_1").classList.remove("red");
+             document.getElementById("txt_9_1").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_9_1").classList.remove("puzzel");
+			document.getElementById("txt_9_1").classList.remove("green");
+             document.getElementById("txt_9_1").classList.add("red");
+		}
+        if (txt_9_2 == "k"||txt_9_2 == "K") {
+			document.getElementById("txt_9_2").classList.remove("puzzel");
+			document.getElementById("txt_9_2").classList.remove("red");
+             document.getElementById("txt_9_2").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_9_2").classList.remove("puzzel");
+			document.getElementById("txt_9_2").classList.remove("green");
+             document.getElementById("txt_9_2").classList.add("red");
+		}
+        if (txt_9_4 == "n"||txt_9_4 == "N") {
+			document.getElementById("txt_9_4").classList.remove("puzzel");
+			document.getElementById("txt_9_4").classList.remove("red");
+             document.getElementById("txt_9_4").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_9_4").classList.remove("puzzel");
+			document.getElementById("txt_9_4").classList.remove("green");
+             document.getElementById("txt_9_4").classList.add("red");
+		}
+        if (txt_4_8 == "p"||txt_4_8 == "P") {
+			document.getElementById("txt_4_8").classList.remove("puzzel");
+			document.getElementById("txt_4_8").classList.remove("red");
+             document.getElementById("txt_4_8").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_4_8").classList.remove("puzzel");
+			document.getElementById("txt_4_8").classList.remove("green");
+             document.getElementById("txt_4_8").classList.add("red");
+		}
+        if (txt_5_8 == "i"||txt_5_8 == "I") {
+			document.getElementById("txt_5_8").classList.remove("puzzel");
+			document.getElementById("txt_5_8").classList.remove("red");
+             document.getElementById("txt_5_8").classList.add("green");
+             skor++;
+		}else{
+			document.getElementById("txt_5_8").classList.remove("puzzel");
+			document.getElementById("txt_5_8").classList.remove("green");
+             document.getElementById("txt_5_8").classList.add("red");
+		}
+        
+        
+		alert("skor anda = "+skor);
+	}
+    
+</script>
+</head>
+<body onload="initializeScreen()">
+<h1>SELAMAT DATANG </h1>
+<h2>Teka-Teki Silang</h2>
+<div id="leftBox">
+<table id="puzzel">
+
+</table>
+</div>
+<div id="rightBox">
+<table>
+	<tr>
+	    <td><input class="butt"  type="submit" value="Hapus Semua" onclick="clearAllClicked()"></td>
+	    <td><input class="butt"  type="submit" value="Cek" onclick="checkClicked()"></td>
+	    <td><input class="butt"  type="submit" value="Clue" onclick="clueClicked()"></td>
+	    <td><input class="butt"  type="submit" value="Skor" onclick="cek_skor()"></td>
+	</tr>
+</table>
+</div>
+<table id="hintsTable">
+		<tr>
+			<td><b><u>Mendatar</u></b></td><td><b><u>Menurun</u></b></td>
+		</tr>
+		<tr>
+			<td>1. BSO Jaringan Teknik Informatika UIN SGD</td><td>2. Pulau dengan penduduk paling banyak di Indonesia</td>
+		</tr>
+		<br>
+		<tr>
+			<td>5. Tempat Walikota Bu Risma</td><td>3. Rasa air laut </td>
+		</tr>
+		<br>
+		<tr>
+            <td>8. Menteri Agama Baru 2019</td><td>4. Di kota manakah UIN SGD berada?</td></tr>
+        <br>
+		<tr>
+            <td>9. Bagus(Bahasa Inggris)</td><td>6. Siapa istri saya?</td></tr>
+        <br>
+		<tr>
+            <td>10. Kata bu Susi kita harus makan .... , kalau tidak TENGGELAMKAN!</td><td>7. Lawan kata air</td></tr>    
+</table>
+
+</body>
+</html>
